@@ -3,14 +3,15 @@ import { Avatar } from './Avatar'
 import styles from './Comment.module.css'
 
 export function Comment(){
+    const {comment,commentBox,commentContent,authorAndTime} = styles
     return(
-        <div className={styles.comment}>
+        <div className={comment}>
             <Avatar hasBorder={false} src="https://github.com/JeanLincoln.png"/>
 
-            <div className={styles.commentBox}>
-                <div className={styles.commentContent}>
+            <div className={commentBox}>
+                <div className={commentContent}>
                     <header>
-                        <div className={styles.authorAndTime}>
+                        <div className={authorAndTime}>
                             <strong>Jean Lincoln</strong>
                             <time 
                                 title="11 de maio ás 08:13" 
