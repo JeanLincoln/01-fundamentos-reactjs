@@ -11,21 +11,35 @@ export function Post({author,content,publishedAt}){
 
     const publishedDateFormatted = 
         format(publishedAt,"dd 'de' LLLL 'ás' HH:mm'h'",{locale:ptbr})
+
     const publishedDateRelativeToNow = formatDistanceToNow(publishedAt,{
         locale:ptbr,
         addSuffix:true
     })
 
-    function handleCreateNewComment(e){
+    const  handleCreateNewComment = e => {
         e.preventDefault()
         setComments([...comments,newCommentText])
         setNewCommentText('')
     }
 
-    function handleNewCOmmentChange(e){
+    const  handleNewCOmmentChange = e => {
+        e.target.setCustomValidity('')
         setNewCommentText(e.target.value)
     }
-        
+
+    const handleNewCommentInvalid = e => {
+        e.target.setCustomValidity('Este campo é obrigatório')
+    }
+
+    const deleteComment = (commentToDelete) => {
+        const commentsWithouDeletedOne = 
+            comments.filter(comment => comment !== commentToDelete)
+
+        setComments(commentsWithouDeletedOne)
+    }
+    
+    const newCommentIsEmpty = newCommentText.length === 0   
 
     return(
         <article className={styles.post}>
@@ -37,15 +51,19 @@ export function Post({author,content,publishedAt}){
                             <span>{author.role}</span>
                         </div>
                 </div>
-                <time title={publishedDateFormatted} dateTime={publishedAt.toISOString()}>{publishedDateRelativeToNow}</time>
+                <time 
+                    title={publishedDateFormatted} 
+                    dateTime={publishedAt.toISOString()}>
+                    {publishedDateRelativeToNow}
+                </time>
             </header>
 
             <div className={styles.content}>
              {content.map(({type,content})=>{
                 if(type === 'paragraph'){
-                    return <p>{content}</p>
+                    return <p key={content} >{content}</p>
                 }
-                return <p><a href="#">{content}</a></p>
+                return <p key={content} ><a href="#">{content}</a></p>
              })}
             </div>
 
@@ -57,14 +75,24 @@ export function Post({author,content,publishedAt}){
                     placeholder='Deixe seu comentário'
                     value={newCommentText}
                     onChange={handleNewCOmmentChange}
+                    onInvalid={handleNewCommentInvalid}
+                    required
                     ></textarea>
                 <footer>
-                <button type='submit'>Publicar</button>
+                <button type='submit' disabled={newCommentIsEmpty}>
+                    Publicar
+                </button>
 
                 </footer>
             </form>
             <div className={styles.commentList}>
-                {comments.map(textContent => <Comment content={textContent} author={author}/>)}
+                {comments.map((textContent) => 
+                    <Comment 
+                        key={textContent}
+                        content={textContent} 
+                        author={author}
+                        onDeleteComment={deleteComment}
+                    />)}
             </div>
         </article>
     )

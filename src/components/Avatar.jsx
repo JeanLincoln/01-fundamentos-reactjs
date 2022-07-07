@@ -6,12 +6,9 @@ export function Avatar({src,hasBorder=true}){
     return(
         <div>
              <img 
-                    className={hasBorder
-                                ?avatarWithBorder
-                                :avatar
-                               }
-                    src={src}
-                    alt="Profile photo" />
+                className={hasBorder?avatarWithBorder:avatar}
+                src={src}
+                alt="Profile photo" />
         </div>
     )
 }
