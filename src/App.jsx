@@ -5,10 +5,6 @@ import { Post } from './components/Post'
 import './global.css'
 import styles from './App.module.css'
 
-//author : {avatar_url:string,name:string,role:string}
-// publishedAt: Date
-//content:string
-
 const posts = [
   {
     id:1,
@@ -29,7 +25,7 @@ const posts = [
     author:{
       avatarUrl:"https://github.com/GabrielMerigo.png",
       name:'Gabriel Merigo',
-      role:'React Developer'
+      role:'code god'
     },
     content:[
       {type:'paragraph', content:'Fala galeraa 👋'},
